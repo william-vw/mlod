@@ -1,0 +1,364 @@
+@prefix : <http://bio2rdf.org/drug_vocabulary:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://bio2rdf.org/drug_vocabulary> .
+
+<http://bio2rdf.org/drug_vocabulary> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://bio2rdf.org/drug_vocabulary:condition-interaction
+:condition-interaction rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :interaction ;
+                       rdfs:range :Drug-Condition-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:condition-interactor
+:condition-interactor rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :interactor .
+
+
+###  http://bio2rdf.org/drug_vocabulary:drug-category
+:drug-category rdf:type owl:ObjectProperty .
+
+
+###  http://bio2rdf.org/drug_vocabulary:drug-interaction
+:drug-interaction rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :interaction ;
+                  rdfs:range :Drug-Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:drug-interactor
+:drug-interactor rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :interactor ;
+                 rdfs:range :Drug .
+
+
+###  http://bio2rdf.org/drug_vocabulary:drug-structure
+:drug-structure rdf:type owl:ObjectProperty ;
+                rdfs:domain :Drug ;
+                rdfs:range :Drug-Structure .
+
+
+###  http://bio2rdf.org/drug_vocabulary:external-id
+:external-id rdf:type owl:ObjectProperty .
+
+
+###  http://bio2rdf.org/drug_vocabulary:food-interaction
+:food-interaction rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf :interaction ;
+                  rdfs:range :Drug-Food-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:food-interactor
+:food-interactor rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :interactor ;
+                 rdfs:range :Food .
+
+
+###  http://bio2rdf.org/drug_vocabulary:interaction
+:interaction rdf:type owl:ObjectProperty ;
+             rdfs:range :Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:interactor
+:interactor rdf:type owl:ObjectProperty ;
+            rdfs:domain :Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:structure-interactor
+:structure-interactor rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :interactor ;
+                      rdfs:range :Drug-Structure .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://bio2rdf.org/drug_vocabulary:external-source
+:external-source rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :External-Id ;
+                 rdfs:range xsd:string .
+
+
+###  http://bio2rdf.org/drug_vocabulary:interaction-risk
+:interaction-risk rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Drug-Interaction ;
+                  rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://bio2rdf.org/drug_vocabulary:Drug
+:Drug rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Category
+:Drug-Category rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Condition-Interaction
+:Drug-Condition-Interaction rdf:type owl:Class ;
+                            rdfs:subClassOf :Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Drug-Interaction
+:Drug-Drug-Interaction rdf:type owl:Class ;
+                       rdfs:subClassOf :Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Food-Interaction
+:Drug-Food-Interaction rdf:type owl:Class ;
+                       rdfs:subClassOf :Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Interaction
+:Drug-Interaction rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Drug-Structure
+:Drug-Structure rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:External-Id
+:External-Id rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Food
+:Food rdf:type owl:Class .
+
+
+###  http://bio2rdf.org/drug_vocabulary:Health-Condition
+:Health-Condition rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://bio2rdf.org/drug_vocabulary:d1
+:d1 rdf:type owl:NamedIndividual ,
+             :Drug ;
+    :interaction :ddi1 .
+
+
+###  http://bio2rdf.org/drug_vocabulary:d2
+:d2 rdf:type owl:NamedIndividual ,
+             :Drug .
+
+
+###  http://bio2rdf.org/drug_vocabulary:ddi1
+:ddi1 rdf:type owl:NamedIndividual ,
+               :Drug-Drug-Interaction .
+
+
+###  http://bio2rdf.org/drug_vocabulary:ddi2
+:ddi2 rdf:type owl:NamedIndividual ,
+               :Drug-Drug-Interaction ;
+      :interactor :d2 .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+<urn:swrl:var#d> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#i> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#dci> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#ddi> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#dfi> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#s> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#f> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+<urn:swrl:var#h> rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Drug ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#d>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interaction ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#d> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :drug-interactor ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#d>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Drug-Drug-Interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#ddi>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interactor ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#ddi> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :drug-interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#ddi>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Drug-Food-Interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#dfi>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interactor ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#dfi> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :food-interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#dfi>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Drug-Structure ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#s>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interaction ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#s> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :structure-interactor ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#s>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Food ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#f>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interaction ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#f> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :food-interactor ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#f>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Health-Condition ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#h>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interaction ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#h> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :condition-interactor ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#h>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Drug-Condition-Interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#dci>
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :interactor ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#dci> ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#i>
+                                                                ] ;
+                                                      rdf:rest rdf:nil
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :condition-interaction ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> <urn:swrl:var#i> ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> <urn:swrl:var#dci>
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

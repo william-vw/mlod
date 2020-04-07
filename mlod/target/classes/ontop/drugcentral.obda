@@ -1,0 +1,48 @@
+[PrefixDeclaration]
+dv:		http://bio2rdf.org/drug_vocabulary:
+dg:		http://bio2rdf.org/drug:
+di: 	http://bio2rdf.org/drug_interaction:
+ds: 	http://bio2rdf.org/drug_struct:
+dc:		http://bio2rdf.org/drug_condition:
+de:		http://bio2rdf.org/drug_id:
+dy:		http://bio2rdf.org/drug_synonym:
+owl:	http://www.w3.org/2002/07/owl#
+rdf:	http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xsd:	http://www.w3.org/2001/XMLSchema#
+rdf: 	http://www.w3.org/1999/02/22-rdf-syntax-ns#
+rdfs:	http://www.w3.org/2000/01/rdf-schema#
+dct:	http://purl.org/dc/terms/
+
+[MappingDeclaration] @collection [[
+mappingId	cl_Drug
+target		dg:{drug_id} a dv:Drug ; dct:title {drug_name}^^xsd:string . dg:{drug_id} dct:source "DrugCentral" .
+source		select id as drug_id, name as drug_name from drug_class
+
+mappingId	cl_Struct_Synonym
+target		dg:{drug_class_id} dv:drug-synonym dy:{drug_syn_id} . dy:{drug_syn_id} dct:title {drug_syn}^^xsd:string ; dct:source "DrugCentral" .
+source		select drug_class_id, struct_id, sy.syn_id as drug_syn_id, sy.name as drug_syn from struct2drgclass as s2d inner join synonyms as sy on (s2d.struct_id = sy.id) 
+
+mappingId	cl_Struct
+target		ds:{struct_id} a dv:Drug-Structure . dg:{drug_class_id} dv:drug-structure ds:{struct_id} . ds:{struct_id} dct:source "DrugCentral" .
+source		select drug_class_id, struct_id from struct2drgclass
+
+mappingId	cl_DDI
+target		di:{ddi_id} a dv:Drug-Drug-Interaction ; dv:drug-interactor dg:{drug_id1} ; dv:drug-interactor dg:{drug_id2} ; dct:description {description}^^xsd:string ; dv:interaction-risk {ddi_risk}^^xsd:string . dg:{drug_id1} dv:drug-interaction di:{ddi_id} . dg:{drug_id2} dv:drug-interaction di:{ddi_id} .  di:{ddi_id} dct:source "DrugCentral" .
+source		select ddi.id as ddi_id, dc1.id as drug_id1, drug_class1, dc2.id as drug_id2, drug_class2, description, ddi_risk from ddi inner join drug_class as dc1 on (ddi.drug_class1 = dc1.name) inner join drug_class as dc2 on (ddi.drug_class2 = dc2.name)
+
+mappingId	cl_Cond
+target		dc:{cond_id} a dv:Health-Condition ; dct:title {cond_name}^^xsd:string ; dv:external-id de:{snomed_id} ; dv:external-id de:{umls_cui} . de:{snomed_id} dct:identifier {snomed_id}^^xsd:string ; dv:external-source "SNOMED" . de:{umls_cui} dct:identifier {umls_cui}^^xsd:string ; dv:external-source "UMLS" . dc:{cond_id} dct:source "DrugCentral" . 
+source		select concept_id as cond_id, concept_name as cond_name, snomed_conceptid as snomed_id, umls_cui from omop_relationship
+
+mappingId	cl_Cond2
+target		dc:{cond_id} a dv:Health-Condition ; dct:title {cond_name}^^xsd:string ; dv:interaction-risk {cond_risk}^^xsd:string ; dct:source "DrugCentral" . 
+source		select meddra_code as cond_id, meddra_name as cond_name, llr as cond_risk from faers
+
+mappingId 	cl_DCI
+target		di:{dci_id} a dv:Drug-Condition-Interaction ; dv:structure-interactor ds:{struct_id} ; dv:condition-interactor dc:{cond_id} . ds:{struct_id} dv:condition-interaction di:{dci_id} . dc:{cond_id} dv:condition-interaction di:{dci_id} . di:{dci_id} dct:source "DrugCentral" .
+source		select id as dci_id, struct_id, concept_id as cond_id from omop_relationship
+
+mappingId 	cl_DCI2
+target		di:{dci_id} a dv:Drug-Condition-Interaction ; dv:structure-interactor ds:{struct_id} ; dv:condition-interactor dc:{cond_id} . ds:{struct_id} dv:condition-interaction di:{dci_id} . dc:{cond_id} dv:condition-interaction di:{dci_id} . di:{dci_id} dct:source "DrugCentral" .
+source		select id as dci_id, struct_id, meddra_code as cond_id from faers
+]]
