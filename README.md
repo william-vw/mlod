@@ -28,3 +28,7 @@ set its path in `config.properties`, and initialize the TDB using the `Drugbank.
  ## Test
  
  See the `wvw.mlod.test.Test` class for tests.
+
+## Code
+
+See `mlod/docs` for JavaDoc. When running the code, the interesting classes are `DrugRepository` and its subclasses.
