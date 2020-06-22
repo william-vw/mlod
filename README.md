@@ -1,6 +1,6 @@
 # Medical Linked Open Data (MLOD)
 
-MLOD stands for integrated semantic knowledge for the detection of drug-drug and drug-illness interactions.
+MLOD includes integrated semantic knowledge for the detection of drug-drug and drug-illness interactions.
 
 While relevant sources are freely available, such as [DrugBank](http://www.drugbank.com/) and 
 [DrugCentral](http://drugcentral.org/), these exist in custom formats (XML,  CSV) and are not interlinked. 
