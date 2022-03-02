@@ -17,13 +17,19 @@ for converting the DrugBank XML dump into semantic format.
 
 ## Setup
 
-To get the latest MLOD data:
+To retrieve and load the latest MLOD data, see the instructions below. These steps could take a while (10-20 minutes) depending on your machine, but they only need to be executed initially (and whenever you want to load updates). 
 
 - **Drugbank**: download the latest [Drugbank XML dump](https://www.drugbank.ca/releases/latest), 
-set its path in `config.properties`, and initialize the TDB using the `Drugbank.initializeFromXml()` method.
+set its path in `config.properties`, and initialize the TDB using the `Drugbank.initializeFromXml()` method. 
+ 
+As shown in the config file, several custom folders also need to be created for storing internal XML, RDF and TDB files.
+ 
+The `initializeFromXml()` method will segment the XML file, separately convert each XML segment into RDF, and load the RDF into a persistent [Triple DataBase (TDB)](https://jena.apache.org/documentation/tdb/). If a particular step fails for some reason (e.g., loading into TDB), the prior steps do not have to be repeated. (Or, you can simply start from the segment where the process left off). 
  
  - **Drugcentral**: download the latest [Drugcentral SQL dump](http://drugcentral.org/download), 
  load it into a PostgreSQL database and set the database credentials in `config.properties`.
+ 
+E.g., you can create a `drugcentral` database using [pgAdmin](https://www.pgadmin.org/) and use `psql -U postgres drugcentral < drugcentral.dump.010_05_2021.sql` to populate the database (this assumes your root user is called `postgres`)
  
  ## Test
  
@@ -31,4 +37,4 @@ set its path in `config.properties`, and initialize the TDB using the `Drugbank.
 
 ## Code
 
-See `mlod/docs` for JavaDoc. When running the code, the interesting classes are `DrugRepository` and its subclasses.
+See `mlod/docs` for JavaDoc. When running the code, classes of interest include `DrugRepository` and its subclasses.
