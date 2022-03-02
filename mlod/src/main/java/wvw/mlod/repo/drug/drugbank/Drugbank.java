@@ -1,9 +1,5 @@
 package wvw.mlod.repo.drug.drugbank;
 
-import java.io.IOException;
-
-import javax.xml.bind.JAXBException;
-
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
@@ -85,14 +81,15 @@ public class Drugbank extends DrugRepository {
 		XmlDrugbankParser xdp = new XmlDrugbankParser();
 
 		try {
+			String xmlFile = MlodConfig.drugbankXmlFile();
+			String segmFolder = MlodConfig.drugbankSegmFolder();
+			String rdfFolder = MlodConfig.drugbankRdfFolder();
+
 			// - step 1
 
 			Log.i("segmenting Drugbank XML file");
 
 			Timer.start("segmentXml");
-
-			String xmlFile = MlodConfig.drugbankXmlFile();
-			String segmFolder = MlodConfig.drugbankSegmFolder();
 
 			xdp.segmentXml(xmlFile, segmFolder, "drug_segment", 10, Integer.MAX_VALUE);
 
@@ -105,8 +102,6 @@ public class Drugbank extends DrugRepository {
 			Log.i("parsing Drugbank XML segments");
 
 			Timer.start("parseXml");
-
-			String rdfFolder = MlodConfig.drugbankRdfFolder();
 
 			xdp.parseXmlSegments(segmFolder, rdfFolder, 10, 10);
 
@@ -128,7 +123,7 @@ public class Drugbank extends DrugRepository {
 
 			Log.i("");
 
-		} catch (JAXBException | IOException e) {
+		} catch (Exception e) {
 			throw new RepositoryException(e);
 		}
 	}

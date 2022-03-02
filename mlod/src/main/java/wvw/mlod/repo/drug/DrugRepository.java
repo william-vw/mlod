@@ -488,12 +488,13 @@ public abstract class DrugRepository extends Repository {
 			String dciUri = rs.getUri("dci");
 
 			DrugConditionInteraction dci = new DrugConditionInteraction(dciUri, null, drug, cond);
-			loadSource(dci);
-
 			cond.getDcis().add(dci);
 		}
 
 		rs.close();
+
+		for (DrugConditionInteraction dci : cond.getDcis())
+			loadSource(dci);
 	}
 
 	/**
@@ -536,12 +537,13 @@ public abstract class DrugRepository extends Repository {
 			ddi.setDescription(ddiDescr);
 			ddi.setRisk(ddiRisk);
 
-			loadSource(ddi);
-
 			ret.add(ddi);
 		}
 
 		rs.close();
+
+		for (DrugDrugInteraction ddi : ret)
+			loadSource(ddi);
 
 		return ret;
 	}
@@ -580,12 +582,13 @@ public abstract class DrugRepository extends Repository {
 			String dciUri = rs.getUri("dci");
 
 			DrugConditionInteraction dci = new DrugConditionInteraction(dciUri, null, drug, cond);
-			loadSource(dci);
-
 			ret.add(dci);
 		}
 
 		rs.close();
+
+		for (DrugConditionInteraction dci : ret)
+			loadSource(dci);
 
 		return ret;
 	}
@@ -620,12 +623,13 @@ public abstract class DrugRepository extends Repository {
 			HealthCondition cond = new HealthCondition(rs.getUri("cond"));
 
 			DrugConditionInteraction dci = new DrugConditionInteraction(rs.getUri("dci"), null, drug, cond);
-			loadSource(dci);
-
 			ret.add(dci);
 		}
 
 		rs.close();
+
+		for (DrugConditionInteraction dci : ret)
+			loadSource(dci);
 
 		return ret;
 	}
@@ -652,12 +656,13 @@ public abstract class DrugRepository extends Repository {
 			String source = rs.getLiteral("source");
 
 			ExternalId extId = new ExternalId(res, id, source);
-			loadSource(extId);
-
 			entity.getIds().add(extId);
 		}
 
 		rs.close();
+
+		for (ExternalId extId : entity.getIds())
+			loadSource(extId);
 	}
 
 	private void loadDrugStructure(Drug drug) throws QueryException {
@@ -678,11 +683,12 @@ public abstract class DrugRepository extends Repository {
 
 			DrugStructure struct = new DrugStructure(structUri);
 			drug.setStructure(struct);
-
-			loadSource(struct);
 		}
 
 		rs.close();
+
+		if (drug.hasStructure())
+			loadSource(drug.getStructure());
 	}
 
 	private void loadSynonyms(Drug drug) throws QueryException {
@@ -704,10 +710,13 @@ public abstract class DrugRepository extends Repository {
 			String synonym = rs.getLiteral("syn");
 
 			DrugSynonym syn = new DrugSynonym(synUri, synonym);
-			loadSource(syn);
-
 			drug.getSynonyms().add(syn);
 		}
+
+		rs.close();
+
+		for (DrugSynonym syn : drug.getSynonyms())
+			loadSource(syn);
 	}
 
 	private void loadCategories(Drug drug) throws QueryException {
@@ -729,10 +738,12 @@ public abstract class DrugRepository extends Repository {
 			String catName = rs.getLiteral("name");
 
 			DrugCategory category = new DrugCategory(catUri, catName);
+			drug.getCategories().add(category);
+		}
+
+		for (DrugCategory category : drug.getCategories()) {
 			loadSource(category);
 			loadExternalIds(category);
-
-			drug.getCategories().add(category);
 		}
 
 		rs.close();
@@ -768,18 +779,20 @@ public abstract class DrugRepository extends Repository {
 			String drug2Name = rs.getLiteral("name2");
 
 			Drug drug2 = new Drug(drug2Uri, drug2Name);
-			loadSource(drug2);
 
 			DrugDrugInteraction ddi = new DrugDrugInteraction(ddiUri, null, drug, drug2);
 			ddi.setDescription(ddiDescr);
 			ddi.setRisk(ddiRisk);
 
-			loadSource(ddi);
-
 			drug.getDdis().add(ddi);
 		}
 
 		rs.close();
+
+		for (DrugDrugInteraction ddi : drug.getDdis()) {
+			loadSource(ddi.getDrug2());
+			loadSource(ddi);
+		}
 	}
 
 	private void loadDCIs(Drug drug) throws QueryException {
@@ -816,10 +829,12 @@ public abstract class DrugRepository extends Repository {
 
 			DrugConditionInteraction dci = new DrugConditionInteraction(dciUri, null, drug, cond);
 			dci.setRisk(dciRisk);
-			loadSource(dci);
 
 			drug.getDcis().add(dci);
 		}
+
+		for (DrugConditionInteraction dci : drug.getDcis())
+			loadSource(dci);
 
 		rs.close();
 	}
@@ -846,17 +861,19 @@ public abstract class DrugRepository extends Repository {
 			String food2Name = rs.getLiteral("name2");
 
 			Food food = new Food(food2Uri, food2Name);
-			loadSource(food);
 
 			DrugFoodInteraction dfi = new DrugFoodInteraction(dfiUri);
 			dfi.setFood(food);
-
-			loadSource(dfi);
 
 			drug.getDfis().add(dfi);
 		}
 
 		rs.close();
+
+		for (DrugFoodInteraction dfi : drug.getDfis()) {
+			loadSource(dfi.getFood());
+			loadSource(dfi);
+		}
 	}
 
 	private void loadSource(MedicalEntity entity) throws QueryException {

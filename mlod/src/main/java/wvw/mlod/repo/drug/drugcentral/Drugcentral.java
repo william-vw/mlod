@@ -94,15 +94,20 @@ public class Drugcentral extends DrugRepository {
 		OntopOWLStatement stmt = conn.createStatement();
 		TupleOWLResultSet rs = stmt.executeSelectQuery(query);
 
-		int columnSize = rs.getColumnCount();
 		while (rs.hasNext()) {
 			OWLBindingSet bs = rs.next();
 
-			for (int idx = 1; idx <= columnSize; idx++) {
-				OWLObject binding = bs.getOWLObject(idx);
+			bs.forEach(binding -> {
+				OWLObject obj = null;
+				try {
+					obj = binding.getValue();
+					
+				} catch (OWLException e) {
+					e.printStackTrace();
+				}
 
-				Log.i(ToStringRenderer.getInstance().getRendering(binding) + ", ");
-			}
+				Log.i(ToStringRenderer.getInstance().getRendering(obj) + ", ");
+			});
 
 			Log.i("\n");
 		}

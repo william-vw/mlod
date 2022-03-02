@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>wvw.semweb</groupId>
 	<artifactId>mlod</artifactId>
@@ -62,15 +60,18 @@
 
 		<!-- ontop -->
 
+		<!-- https://mvnrepository.com/artifact/it.unibz.inf.ontop/ontop-system-sql-owlapi -->
 		<dependency>
 			<groupId>it.unibz.inf.ontop</groupId>
 			<artifactId>ontop-system-sql-owlapi</artifactId>
-			<version>3.0.0-beta-2</version>
+			<version>4.2.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/it.unibz.inf.ontop/ontop-owlapi -->
 		<dependency>
 			<groupId>it.unibz.inf.ontop</groupId>
 			<artifactId>ontop-owlapi</artifactId>
-			<version>3.0.0-beta-2</version>
+			<version>4.2.0</version>
 		</dependency>
 
 		<dependency>
@@ -88,7 +89,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.0.0</version>
+			<version>42.3.3</version>
 		</dependency>
 
 		<dependency>

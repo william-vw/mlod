@@ -41,8 +41,10 @@ public class TdbUtils {
 		for (int i = 0; i < files.length; i++) {
 			File file = files[i];
 
-			Log.i("reading " + file.getName() + " (" + (i + 1) + "/" + files.length + ")");
-			model.read(new FileInputStream(file), "", rdfFormat);
+			if (file.getName().endsWith(".n3")) {
+				Log.i("reading " + file.getName() + " (" + (i + 1) + "/" + files.length + ")");
+				model.read(new FileInputStream(file), "", rdfFormat);
+			}
 		}
 
 		dataset.commit();
