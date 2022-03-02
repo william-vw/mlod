@@ -22,7 +22,7 @@ To retrieve and load the latest MLOD data, see the instructions below. These st
 - **Drugbank**: download the latest [Drugbank XML dump](https://www.drugbank.ca/releases/latest), 
 set its path in `config.properties`, and initialize the TDB using the `Drugbank.initializeFromXml()` method. 
  
-As shown in the config file, several custom folders also need to be created for storing internal XML, RDF and TDB files. These can be removed after the loading process is completed.
+As shown in the config file, several custom folders also need to be created for storing internal XML, RDF and TDB files. The XML and RDF folders can be removed after the loading process is completed.
  
 The `initializeFromXml()` method will segment the XML file, separately convert each XML segment into RDF, and load the RDF into a persistent [Triple DataBase (TDB)](https://jena.apache.org/documentation/tdb/). If a particular step fails for some reason (e.g., loading into TDB), the prior steps do not have to be repeated. (Or, you can simply start from the segment where the process left off). 
  
