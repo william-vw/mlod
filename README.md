@@ -30,7 +30,7 @@ The `initializeFromXml()` method will segment the XML file, separately convert e
  load it into a PostgreSQL database and set the database credentials in `config.properties`.
  
 E.g., you can create a `drugcentral` database using [pgAdmin](https://www.pgadmin.org/) and use `psql -U postgres drugcentral < drugcentral.dump.010_05_2021.sql` to populate the database (this assumes your root user is called `postgres`)
- 
+
  ## Test
  
  See the `wvw.mlod.test.Test` class for tests.
@@ -38,3 +38,19 @@ E.g., you can create a `drugcentral` database using [pgAdmin](https://www.pgadmi
 ## Code
 
 See `mlod/docs` for JavaDoc. When running the code, classes of interest include `DrugRepository` and its subclasses.
+
+## Troubleshooting
+
+- If PostgreSQL throws the following error:
+
+org.postgresql.util.PSQLException: The authentication type 10 is not supported. Check that you have configured the pg_hba.conf file to include the client's IP address or subnet, and that it is using an authentication scheme supported by the driver.
+
+You should upgrade to the latest version of [postgresql](https://mvnrepository.com/artifact/org.postgresql/postgresql).
+
+
+- If Ontop throws `java.lang.ClassFormatError` as below:
+```
+Unable to make protected final java.lang.Class java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain) throws java.lang.ClassFormatError accessible: module java.base does not "opens java.lang" to unnamed module @24912924
+```
+
+You are likely using an older version of Ontop (e.g., v. 3); try reverting to an earlier version of the JDK (1.8 and 11 are tested, but newer ones may work as well). 
